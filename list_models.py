@@ -1,8 +1,10 @@
-
 from google import genai
 import os
+from dotenv import load_dotenv
 
-API_KEY = "AIzaSyDii357S9SM7hxYYe_YfHq1BxNq_IFUoQU"
+load_dotenv()
+
+API_KEY = os.environ.get("GEMINI_API_KEY")
 
 def list_models():
     print("--- Listing Available Models ---")

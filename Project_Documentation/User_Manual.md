@@ -15,8 +15,8 @@ Before starting, ensure you have:
 Open your command prompt (terminal) and run the following command to download the project code:
 
 ```bash
-git clone https://github.com/Charanjetty/AgroIntelligence_Final.git
-cd AgroIntelligence_Final
+git clone https://github.com/Charanjetty/Agro_intelligence_Final.git
+cd Agro_intelligence_Final
 
 ```
 

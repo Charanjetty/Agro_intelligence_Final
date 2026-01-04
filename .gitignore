@@ -39,12 +39,9 @@ models/*.pkl
 models/*.json
 fix_routes.py
 generate_graphs.py
-IEEE_Showcase_Hybrid_Model.ipynb
-confusion matrix.ipynb
 confusion_matrix_counts.png
 confusion_matrix_normalized.png
-ieee_confusion_matrix_counts.png
-ieee_confusion_matrix_normalized.png
+
 # *.png
 # *.jpg
 # *.jpeg
