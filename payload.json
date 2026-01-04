@@ -1,0 +1,14 @@
+{
+    "district": "Guntur",
+    "season": "Kharif",
+    "soil_type": "Red",
+    "mode": "manual",
+    "soil_n": 100,
+    "soil_p": 50,
+    "soil_k": 50,
+    "soil_ph": 6.5,
+    "organic_carbon": 0.5,
+    "temperature": 30,
+    "rainfall": 100,
+    "humidity": 60
+}

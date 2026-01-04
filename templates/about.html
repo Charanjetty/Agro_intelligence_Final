@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}About Us - AgroIntelligence{% endblock %}
+{% block head %}
+<style>
+    .team-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+    }
+
+    .stat-box {
+        background: linear-gradient(135deg, #10b981, #16a34a);
+    }
+</style>
+{% endblock %}
+{% block content %}
+<section class="glass rounded-3xl p-6 md:p-10 space-y-6">
+    <div class="max-w-4xl mx-auto text-center">
+        <p class="text-sm uppercase tracking-widest text-green-600 font-semibold">
+            Our Mission
+        </p>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mt-3">
+            Empowering Farmers with AI-Driven Intelligence
+        </h1>
+        <p class="text-lg text-slate-600 mt-4 leading-relaxed">
+            AgroIntelligence is a cutting-edge platform designed specifically for Andhra Pradesh farmers.
+        <h2 class="text-3xl font-bold text-slate-900 mt-2">
+            Comprehensive Agricultural Solutions
+        </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-8">
+        <div class="bg-slate-50 rounded-2xl p-6">
+            <div
+                class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mb-4">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">AI-Powered Recommendations</h3>
+            <p class="text-slate-600 mt-2">
+                Our machine learning model analyzes soil conditions, weather patterns, and historical data
+                to recommend the best crops for your land.
+            </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6">
+            <div
+                class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mb-4">
+                <i class="fas fa-cloud-sun"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Real-Time Weather Intelligence</h3>
+            <p class="text-slate-600 mt-2">
+                Access live weather updates and 12-hour forecasts to plan irrigation, spraying,
+                and harvesting activities with precision.
+            </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6">
+            <div
+                class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mb-4">
+                <i class="fas fa-seedling"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Fertilizer & Irrigation Plans</h3>
+            <p class="text-slate-600 mt-2">
+                Get customized NPK fertilizer recommendations and irrigation schedules based on
+                your crop choice and soil health.
+            </p>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6">
+            <div
+                class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mb-4">
+                <i class="fas fa-landmark"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900">Government Schemes</h3>
+            <p class="text-slate-600 mt-2">
+                Stay informed about subsidies, insurance programs, and financial assistance
+                available to Andhra Pradesh farmers.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="glass rounded-3xl p-6 md:p-10 space-y-6">
+    <div class="text-center">
+        <p class="text-sm uppercase tracking-widest text-green-600 font-semibold">
+            Our Story
+        </p>
+        <h2 class="text-3xl font-bold text-slate-900 mt-2">
+            Built for Farmers, By Agricultural Experts
+        </h2>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-4 text-slate-700 leading-relaxed">
+        <p>
+            AgroIntelligence was born from a simple observation: farmers in Andhra Pradesh needed
+            better tools to make informed decisions about their crops. Traditional methods of crop
+            selection often relied on guesswork or outdated information.
+        </p>
+        <p>
+            Our team of agricultural scientists, data engineers, and software developers came together
+            to create a platform that democratizes access to advanced agricultural intelligence. We've
+            trained our AI model on thousands of data points from across all 26 districts of Andhra Pradesh.
+        </p>
+        <p>
+            Today, AgroIntelligence serves as a digital companion for farmers—offering recommendations
+            Get Started Now
+            </a>
+</section>
+{% endblock %}

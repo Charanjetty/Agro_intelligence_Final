@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+{% block title %}Contact Us - AgroIntelligence{% endblock %}
+{% block head %}
+<style>
+    .contact-card {
+        transition: all 0.3s ease;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 15px 30px rgba(15, 23, 42, 0.1);
+    }
+</style>
+{% endblock %}
+{% block content %}
+<section class="glass rounded-3xl p-6 md:p-10 space-y-6">
+    <div class="max-w-3xl mx-auto text-center">
+        <p class="text-sm uppercase tracking-widest text-green-600 font-semibold">
+            Get in Touch
+        </p>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mt-3">
+            We're Here to Help
+        </h1>
+        <p class="text-lg text-slate-600 mt-4">
+            Have questions about crop recommendations, technical issues, or partnership opportunities?
+            Reach out to us through any of the channels below.
+        </p>
+    </div>
+</section>
+
+<section class="grid md:grid-cols-3 gap-6">
+    <div class="contact-card bg-white rounded-3xl shadow p-6 text-center">
+        <div
+            class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mx-auto">
+            <i class="fas fa-envelope"></i>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 mt-4">Email Us</h3>
+        <p class="text-slate-600 mt-2">For general inquiries and support</p>
+
+    </div>
+
+    <div class="contact-card bg-white rounded-3xl shadow p-6 text-center">
+        <div
+            class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mx-auto">
+            <i class="fas fa-phone"></i>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 mt-4">Call Us</h3>
+        <p class="text-slate-600 mt-2">Mon-Sat, 9 AM - 6 PM IST</p>
+        <a href="tel:+918008001234" class="text-green-600 font-semibold hover:underline mt-3 inline-block">
+            +91 800-800-1234
+        </a>
+    </div>
+
+    <div class="contact-card bg-white rounded-3xl shadow p-6 text-center">
+        <div
+            class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-2xl mx-auto">
+            <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 mt-4">Visit Us</h3>
+        <p class="text-slate-600 mt-2">Main Office</p>
+        <p class="text-green-600 font-semibold mt-3">
+            Agricultural Research Center<br>
+            Vijayawada, Andhra Pradesh
+        </p>
+    </div>
+</section>
+
+<section class="glass rounded-3xl shadow p-6 md:p-10">
+    <div class="grid md:grid-cols-2 gap-10">
+        <div>
+            <h2 class="text-2xl font-bold text-slate-900">Send Us a Message</h2>
+            <p class="text-slate-600 mt-2 mb-6">
+                Fill out the form and we'll get back to you within 24 hours.
+            </p>
+
+            <form id="contact-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Full Name *</label>
+                    <input type="text" required
+                        class="w-full rounded-xl border border-slate-200 p-3 focus:ring-2 focus:ring-green-500"
+                        placeholder="Enter your name">
+                </div>
+
+
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Phone Number</label>
+                    <input type="tel"
+                        class="w-full rounded-xl border border-slate-200 p-3 focus:ring-2 focus:ring-green-500"
+                        placeholder="+91 XXXXX XXXXX">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">District</label>
+                    <select class="w-full rounded-xl border border-slate-200 p-3 focus:ring-2 focus:ring-green-500">
+                        <option value="">Select your district</option>
+                        <option>Visakhapatnam</option>
+                        <option>Vijayawada</option>
+                        <option>Guntur</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Subject *</label>
+                    <input type="text" required
+                        class="w-full rounded-xl border border-slate-200 p-3 focus:ring-2 focus:ring-green-500"
+                        placeholder="What is this regarding?">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Message *</label>
+                    <textarea required rows="5"
+                        class="w-full rounded-xl border border-slate-200 p-3 focus:ring-2 focus:ring-green-500"
+                        placeholder="Tell us more about your inquiry..."></textarea>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-green-600 text-white font-semibold py-3 rounded-2xl shadow-lg hover:bg-green-700 transition">
+                    Send Message
+                </button>
+
+                <div id="form-message" class="hidden text-center p-3 rounded-xl"></div>
+            </form>
+        </div>
+
+        <div class="space-y-6">
+            <div>
+                <h3 class="text-xl font-bold text-slate-900">Office Hours</h3>
+                <div class="mt-4 space-y-2 text-slate-700">
+                    <p><span class="font-semibold">Monday - Friday:</span> 9:00 AM - 6:00 PM</p>
+                    <p><span class="font-semibold">Saturday:</span> 10:00 AM - 4:00 PM</p>
+                    <p><span class="font-semibold">Sunday:</span> Closed</p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-slate-900">Follow Us</h3>
+                <div class="flex gap-4 mt-4">
+                    <a href="#"
+                        class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#"
+                        class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#"
+                        class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#"
+                        class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#"
+                        class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-slate-900">Quick Support</h3>
+                <p class="text-slate-600 mt-2">
+                    For immediate assistance, try our AI chatbot on the home page or check our FAQ section.
+                </p>
+                <a href="{{ url_for('home') }}"
+                    class="inline-block mt-4 px-6 py-2 bg-green-50 text-green-700 font-semibold rounded-2xl hover:bg-green-100 transition">
+                    Go to Dashboard
+                </a>
+            </div>
+
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-slate-900">Partnership Inquiries</h3>
+                <p class="text-slate-700 mt-2">
+                    Interested in collaborating with AgroIntelligence? Contact our partnerships team.
+                </p>
+                <a href="mailto:partnerships@agrointelligence.in"
+                    class="text-green-600 font-semibold hover:underline mt-3 inline-block">
+                    partnerships@agrointelligence.in
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="glass rounded-3xl p-6 md:p-10">
+    <h2 class="text-2xl font-bold text-slate-900 text-center mb-6">Frequently Asked Questions</h2>
+    <div class="max-w-3xl mx-auto space-y-4">
+        <details class="bg-white rounded-2xl p-4 shadow">
+            <summary class="font-semibold text-slate-900 cursor-pointer">
+                How accurate are the crop recommendations?
+            </summary>
+            <p class="text-slate-600 mt-2">
+                Our AI model has been trained on thousands of data points from all 26 districts of Andhra Pradesh,
+                achieving over 85% accuracy in crop suitability predictions.
+            </p>
+        </details>
+
+        <details class="bg-white rounded-2xl p-4 shadow">
+            <summary class="font-semibold text-slate-900 cursor-pointer">
+                Is AgroIntelligence free to use?
+            </summary>
+            <p class="text-slate-600 mt-2">
+                Yes! AgroIntelligence is completely free for all farmers in Andhra Pradesh. Our mission is to
+                democratize access to agricultural intelligence.
+            </p>
+        </details>
+
+        <details class="bg-white rounded-2xl p-4 shadow">
+            <summary class="font-semibold text-slate-900 cursor-pointer">
+                Can I use this on my mobile phone?
+            </summary>
+            <p class="text-slate-600 mt-2">
+                Absolutely! Our website is fully responsive and works seamlessly on smartphones, tablets, and computers.
+            </p>
+        </details>
+
+        <details class="bg-white rounded-2xl p-4 shadow">
+            <summary class="font-semibold text-slate-900 cursor-pointer">
+                Do you provide support in Telugu?
+            </summary>
+            <p class="text-slate-600 mt-2">
+                Yes, our dashboard supports both English and Telugu languages. You can switch between them using
+                the language toggle on the home page.
+            </p>
+        </details>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const messageDiv = document.getElementById('form-message');
+        messageDiv.className = 'text-center p-3 rounded-xl bg-green-100 text-green-700';
+        messageDiv.textContent = 'Thank you! Your message has been sent. We\'ll get back to you soon.';
+        messageDiv.classList.remove('hidden');
+        this.reset();
+        setTimeout(() => messageDiv.classList.add('hidden'), 5000);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AgroIntelligence{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url("{{ url_for('static', filename='images/cartoon_farm_landscape.png') }}") no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      width: 100%;
+    }
+
+    .nav-link {
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+    }
+
+    .nav-link:hover {
+      transform: translateY(-1px);
+    }
+  </style>
+  {% block head %}{% endblock %}
+</head>
+
+<body class="text-slate-800 antialiased">
+
+  <!-- Navigation -->
+  <header class="sticky top-0 z-50 glass border-b border-white/20 shadow-lg">
+    <div class="main-container">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-3 group">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <div class="flex flex-col">
+            <span
+              class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-green-700 via-emerald-600 to-green-700">
+              AgroIntelligence
+            </span>
+            <span class="text-xs text-green-600 font-semibold -mt-1">AI-Powered Farming</span>
+          </div>
+        </a>
+
+        <!-- Desktop Menu -->
+        <nav class="hidden md:flex items-center gap-1">
+          <a href="/" class="nav-link hover:bg-green-50 hover:text-green-700 font-medium"><i
+              class="fas fa-home mr-1"></i>Home</a>
+          <a href="/about" class="nav-link hover:bg-green-50 hover:text-green-700 font-medium"><i
+              class="fas fa-info-circle mr-1"></i>About</a>
+          <a href="/dashboard" class="nav-link hover:bg-green-50 hover:text-green-700 font-medium"><i
+              class="fas fa-brain mr-1"></i>Prediction</a>
+          <a href="/weather" class="nav-link hover:bg-green-50 hover:text-green-700 font-medium"><i
+              class="fas fa-cloud-sun mr-1"></i>Weather</a>
+          <a href="/schemes-center" class="nav-link hover:bg-green-50 hover:text-green-700 font-medium"><i
+              class="fas fa-hand-holding-usd mr-1"></i>Schemes</a>
+
+          <div class="h-6 w-px bg-slate-300 mx-2"></div>
+
+          {% if current_user.is_authenticated %}
+          <div class="flex items-center gap-3 ml-2">
+            <a href="/history" class="nav-link hover:bg-blue-50 hover:text-blue-700 font-medium"><i
+                class="fas fa-history mr-1"></i>History</a>
+            <a href="/profile"
+              class="nav-link hover:bg-purple-50 hover:text-purple-700 font-medium flex items-center gap-1">
+              <i class="fas fa-user-circle"></i>
+              Profile
+              <span
+                class="bg-blue-500 text-white text-[8px] px-1.5 py-0.5 rounded-full uppercase tracking-tighter">New</span>
+            </a>
+            <a href="/logout"
+              class="px-5 py-2 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 font-semibold transition shadow-md hover:shadow-lg">
+              <i class="fas fa-sign-out-alt mr-1"></i>Logout
+            </a>
+          </div>
+          {% endif %}
+          <a href="/profile"
+            class="nav-link hover:bg-purple-50 hover:text-purple-700 font-medium flex items-center gap-1">
+            <i class="fas fa-user-circle"></i>Profile
+          </a>
+
+          <!-- Language Toggle Button -->
+          <div class="ml-2 relative group">
+            <button onclick="toggleTelugu()" title="Switch to Telugu"
+              class="w-10 h-10 rounded-full bg-slate-100 hover:bg-green-100 text-slate-600 hover:text-green-600 flex items-center justify-center transition shadow-sm">
+              <i class="fas fa-language text-xl"></i>
+            </button>
+            <!-- Hidden container for the widget to initialize -->
+            <div id="google_translate_element" class="hidden"></div>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button class="md:hidden text-slate-700 text-2xl hover:text-green-600 transition"
+            onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+          </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full left-0 shadow-xl">
+      <div class="flex flex-col p-4 gap-2">
+        <a href="/" class="block py-3 px-4 hover:bg-slate-50 rounded-lg font-medium"><i
+            class="fas fa-home mr-2 text-green-600"></i>Home</a>
+        <a href="/about" class="block py-3 px-4 hover:bg-slate-50 rounded-lg font-medium"><i
+            class="fas fa-info-circle mr-2 text-blue-600"></i>About</a>
+        <a href="/dashboard" class="block py-3 px-4 hover:bg-slate-50 rounded-lg font-medium"><i
+            class="fas fa-brain mr-2 text-purple-600"></i>Prediction</a>
+        <a href="/weather" class="block py-3 px-4 hover:bg-slate-50 rounded-lg font-medium"><i
+            class="fas fa-cloud-sun mr-2 text-yellow-600"></i>Weather</a>
+        <a href="/schemes-center" class="block py-3 px-4 hover:bg-slate-50 rounded-lg font-medium"><i
+            class="fas fa-hand-holding-usd mr-2 text-emerald-600"></i>Schemes</a>
+
+        <div class="border-t border-slate-100 my-2"></div>
+
+        {% if current_user.is_authenticated %}
+        <a href="/history" class="block py-3 px-4 hover:bg-slate-50 rounded-lg font-medium"><i
+            class="fas fa-history mr-2 text-indigo-600"></i>History</a>
+        <a href="/profile" class="block py-3 px-4 hover:bg-slate-50 rounded-lg font-medium"><i
+            class="fas fa-user-circle mr-2 text-purple-600"></i>Profile</a>
+        <a href="/logout" class="block py-3 px-4 text-red-600 hover:bg-red-50 rounded-lg font-medium"><i
+            class="fas fa-sign-out-alt mr-2"></i>Logout</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container py-10 flex-grow">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="mb-6 p-4 rounded-xl border flex items-center gap-3 shadow-sm
+                        {% if category == 'error' %}
+                            bg-red-50 border-red-200 text-red-700
+                        {% elif category == 'warning' %}
+                            bg-yellow-50 border-yellow-200 text-yellow-700
+                        {% elif category == 'info' %}
+                            bg-blue-50 border-blue-200 text-blue-700
+                        {% else %}
+                            bg-green-50 border-green-200 text-green-700
+                        {% endif %}
+                    ">
+      <i
+        class="fas fa-{% if category == 'error' %}exclamation-circle{% elif category == 'warning' %}exclamation-triangle{% elif category == 'info' %}info-circle{% else %}check-circle{% endif %}"></i>
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800 mt-auto">
+    <div class="main-container">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-white text-xl font-bold mb-4 flex items-center gap-2">
+            <i class="fas fa-seedling text-green-500"></i>
+            <span class="text-white">AgroIntelligence</span>
+          </h3>
+          <p class="text-sm leading-relaxed text-slate-400">
+            Empowering Andhra Pradesh farmers with AI-driven insights for better yields and sustainable farming.
+          </p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Platform</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/" class="hover:text-green-400 transition">Home</a></li>
+            <li><a href="/about" class="hover:text-green-400 transition">About Us</a></li>
+            <li><a href="/dashboard" class="hover:text-green-400 transition">Prediction</a></li>
+            <li><a href="/weather" class="hover:text-green-400 transition">Weather Forecast</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Resources</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/schemes-center" class="hover:text-green-400 transition">Government Schemes</a></li>
+            <li><a href="/contact" class="hover:text-green-400 transition">Contact Support</a></li>
+            <li><a href="/privacy" class="hover:text-green-400 transition">Privacy Policy</a></li>
+            <li><a href="/terms" class="hover:text-green-400 transition">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Connect</h4>
+          <div class="flex gap-4 mb-4">
+            <a href="#"
+              class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-400 hover:text-white transition">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#"
+              class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-600 hover:text-white transition">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+          <p class="text-sm text-slate-400 font-medium">
+            Batch number 07 , 9052204445 , ccharanccharan16@gmail.com
+          </p>
+        </div>
+      </div>
+      <div
+        class="border-t border-slate-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+        <p>&copy; 2025 AgroIntelligence. All rights reserved.</p>
+        <p>Built with ❤️ for Farmers</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+  </script>
+
+  <!-- Google Translate Script -->
+  <style>
+    .goog-te-banner-frame.skiptranslate {
+      display: none !important;
+    }
+
+    body {
+      top: 0px !important;
+    }
+  </style>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'te,en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+
+    function toggleTelugu() {
+      var current = getCookie("googtrans");
+      // If currently Telugu (/en/te), switch back to English (/en/en)
+      if (current && current.includes("/en/te")) {
+        document.cookie = "googtrans=/en/en; path=/; domain=" + document.domain;
+        document.cookie = "googtrans=/en/en; path=/";
+      } else {
+        // Otherwise switch to Telugu
+        document.cookie = "googtrans=/en/te; path=/; domain=" + document.domain;
+        document.cookie = "googtrans=/en/te; path=/";
+      }
+      window.location.reload();
+    }
+
+    function getCookie(name) {
+      var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+      return v ? v[2] : null;
+    }
+  </script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <!-- Chatbot Widget -->
+  {% include "components/chatbot.html" %}
+
+  {% block scripts %}
+  {% endblock %}
+</body>
+
+</html>

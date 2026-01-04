@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}History - AgroIntelligence{% endblock %}
+
+{% block head %}
+<style>
+    .prediction-card {
+        background: white;
+        border-radius: 20px;
+        padding: 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        border: 1px solid #f1f5f9;
+    }
+
+    .prediction-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-header {
+        background: #f8fafc;
+        padding: 1.25rem;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .crop-badge {
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .badge-primary {
+        background-color: #dcfce7;
+        color: #166534;
+    }
+
+    .stat-cd {
+        background: #f8fafc;
+        padding: 0.75rem;
+        border-radius: 12px;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #64748b;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 0.95rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="bg-slate-50 min-h-screen py-12 -mt-10 -mx-4">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-3xl font-extrabold text-slate-900">Prediction History</h1>
+            <span
+                class="bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-100 text-sm font-medium text-slate-600">
+                Total Predictions: {{ predictions|length }}
+            </span>
+        </div>
+
+        {% if predictions %}
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for pred in predictions %}
+            <div class="prediction-card">
+                <div class="card-header">
+                    <span class="text-sm font-medium text-slate-500">
+                        <i class="far fa-calendar-alt mr-2"></i>
+                        {{ pred.created_at.strftime('%d %b %Y') }}
+                    </span>
+                    <span
+                        class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded bg-slate-200 text-slate-600">
+                        {{ pred.mode }}
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="mb-6">
+                        <div class="text-xs text-slate-500 uppercase font-bold mb-2">Top Recommendation</div>
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-2xl font-bold text-slate-900">{{ pred.top_crop }}</h3>
+                            <span class="crop-badge badge-primary">
+                                {{ (pred.top_crop_score * 100)|round|int }}% Match
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 mb-6">
+                        {% if pred.second_crop %}
+                        <div class="flex justify-between items-center text-sm p-2 rounded hover:bg-slate-50 transition">
+                            <span class="text-slate-600 font-medium">2. {{ pred.second_crop }}</span>
+                            <span class="text-slate-400 font-bold">{{ (pred.second_crop_score * 100)|round|int
+                                }}%</span>
+                        </div>
+                        {% endif %}
+                        {% if pred.third_crop %}
+                        <div class="flex justify-between items-center text-sm p-2 rounded hover:bg-slate-50 transition">
+                            <span class="text-slate-600 font-medium">3. {{ pred.third_crop }}</span>
+                            <span class="text-slate-400 font-bold">{{ (pred.third_crop_score * 100)|round|int }}%</span>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="border-t border-slate-100 pt-4">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="stat-cd">
+                                <div class="stat-label">District</div>
+                                <div class="stat-value truncate" title="{{ pred.district }}">{{ pred.district }}</div>
+                            </div>
+                            <div class="stat-cd">
+                                <div class="stat-label">Season</div>
+                                <div class="stat-value">{{ pred.season or '-' }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('crop_suggestion', crop_name=pred.top_crop) }}?district={{ pred.district }}&season={{ pred.season }}"
+                        class="block mt-4 text-center w-full py-2 bg-green-50 text-green-700 font-bold rounded-lg hover:bg-green-100 transition">
+                        View Plan
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-24 bg-white rounded-3xl shadow-lg border border-slate-100 max-w-2xl mx-auto">
+            <div class="text-7xl mb-6 animate-bounce">🌱</div>
+            <h3 class="text-2xl font-bold text-slate-900 mb-3">No Predictions Yet</h3>
+            <p class="text-slate-500 mb-8 max-w-md mx-auto">Start exploring by using our AI prediction tools to get the
+                best crop recommendations for your farm.</p>
+            <a href="{{ url_for('dashboard') }}"
+                class="inline-flex items-center px-8 py-4 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                Go to Dashboard
+                <i class="fas fa-arrow-right ml-3"></i>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

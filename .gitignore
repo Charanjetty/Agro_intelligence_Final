@@ -1,0 +1,54 @@
+# Python virtual environment folder
+venv/
+.venv/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Compiled Python files
+*.pyc
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# Environment variables
+.env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Models and temporary scripts (keep core models if needed, but usually we ignore large ones)
+models/*.pkl
+models/*.json
+fix_routes.py
+generate_graphs.py
+IEEE_Showcase_Hybrid_Model.ipynb
+confusion matrix.ipynb
+confusion_matrix_counts.png
+confusion_matrix_normalized.png
+ieee_confusion_matrix_counts.png
+ieee_confusion_matrix_normalized.png
+# *.png
+# *.jpg
+# *.jpeg
+
+# Ignore generated confusion matrix images
+ieee_confusion_matrix_counts.png
+ieee_confusion_matrix_normalized.png

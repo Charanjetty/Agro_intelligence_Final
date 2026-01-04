@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+{% block title %}FAQ - AgroIntelligence{% endblock %}
+{% block head %}
+<style>
+    details {
+        transition: all 0.3s ease;
+    }
+
+    details[open] {
+        background: #f0fdf4;
+    }
+
+    details summary {
+        cursor: pointer;
+        user-select: none;
+    }
+
+    details summary:hover {
+        color: #16a34a;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<section class="glass rounded-3xl p-6 md:p-10 space-y-6">
+    <div class="max-w-3xl mx-auto text-center">
+        <p class="text-sm uppercase tracking-widest text-green-600 font-semibold">
+            Help Center
+        </p>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mt-3">
+            Frequently Asked Questions
+        </h1>
+        <p class="text-lg text-slate-600 mt-4">
+            Find answers to common questions about AgroIntelligence and how to use our platform effectively.
+        </p>
+    </div>
+</section>
+
+<section class="bg-white rounded-3xl shadow p-6 md:p-10">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">General Questions</h2>
+        <div class="space-y-4">
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    What is AgroIntelligence?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    AgroIntelligence is an AI-powered agricultural platform designed for Andhra Pradesh farmers.
+                    We provide personalized crop recommendations, fertilizer plans, irrigation guidance, real-time
+                    weather updates, and information about government schemes—all in one place.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Is AgroIntelligence free to use?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Yes! AgroIntelligence is completely free for all farmers in Andhra Pradesh. Our mission is to
+                    democratize access to advanced agricultural intelligence and help farmers make better decisions.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Which districts are covered?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    We cover all 26 districts of Andhra Pradesh, including Visakhapatnam, Vijayawada, Guntur,
+                    Tirupati, Anantapuram, Kurnool, and many more. Our AI model has been trained on data from
+                    across the entire state.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Can I use this on my mobile phone?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Absolutely! Our website is fully responsive and works seamlessly on smartphones, tablets,
+                    and desktop computers. Simply visit our website from any device with an internet connection.
+                </p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="bg-white rounded-3xl shadow p-6 md:p-10 mt-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Using the Platform</h2>
+        <div class="space-y-4">
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    What's the difference between Manual Mode and Auto Mode?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    <strong>Manual Mode:</strong> You provide your own soil test data (pH, NPK values, organic carbon).
+                    This gives the most accurate recommendations if you have recent soil test results.<br><br>
+                    <strong>Auto Mode:</strong> We use district-level averages from our database. Just select your
+                    district and season, and we'll auto-fill typical soil values. This is great if you don't have
+                    soil test data.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    How accurate are the crop recommendations?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Our AI model has been trained on thousands of data points from all 26 districts and achieves
+                    over 85% accuracy in predicting suitable crops. However, recommendations are advisory—actual
+                    results depend on many factors including farming practices, pest management, and market conditions.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Where can I get soil testing done?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    You can get soil testing done at:
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Rythu Bharosa Kendrams (RBKs) in your mandal</li>
+                    <li>Krishi Vigyan Kendras (KVKs)</li>
+                    <li>Agricultural universities and research stations</li>
+                    <li>Private soil testing laboratories</li>
+                </ul>
+                Most RBKs offer free or subsidized soil testing services.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    How often should I check weather updates?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    We recommend checking weather daily, especially before:
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Planning irrigation activities</li>
+                    <li>Applying pesticides or fungicides</li>
+                    <li>Harvesting operations</li>
+                    <li>Sowing new crops</li>
+                </ul>
+                Our weather data is updated in real-time from Open-Meteo.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Can I change the language?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Yes! On the home page dashboard, you'll find language toggle buttons at the top. You can
+                    switch between English and Telugu (తెలుగు) at any time. The interface will update immediately.
+                </p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="bg-white rounded-3xl shadow p-6 md:p-10 mt-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Technical Questions</h2>
+        <div class="space-y-4">
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Do I need to create an account?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    No! AgroIntelligence currently doesn't require user registration. You can access all features
+                    immediately without creating an account. We may add optional user accounts in the future for
+                    saving your preferences and history.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Is my data secure?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Yes. We take data security seriously. We don't sell your information, and any data you provide
+                    is used only to generate recommendations and improve our services. For more details, please
+                    read our <a href="/privacy" class="text-green-600 hover:underline">Privacy Policy</a>.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    What if the website isn't working?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Try these steps:
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Refresh the page (Ctrl+R or Cmd+R)</li>
+                    <li>Clear your browser cache and cookies</li>
+                    <li>Try a different browser (Chrome, Firefox, Safari)</li>
+                    <li>Check your internet connection</li>
+                </ul>
+                If problems persist, contact us at support@agrointelligence.in
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Can I use this offline?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Currently, AgroIntelligence requires an internet connection to access real-time weather data
+                    and generate AI-powered recommendations. We're exploring offline capabilities for future versions.
+                </p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="bg-white rounded-3xl shadow p-6 md:p-10 mt-6">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">Government Schemes</h2>
+        <div class="space-y-4">
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    How do I apply for government schemes?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Visit our <a href="/schemes-center" class="text-green-600 hover:underline">Schemes page</a>
+                    to browse available programs. Each scheme card has a "Visit portal" button that takes you to
+                    the official application website. You can also apply in person at your local Rythu Bharosa
+                    Kendram with required documents (Aadhaar, land records, bank passbook).
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    What documents do I need for scheme applications?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Commonly required documents include:
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                    <li>Aadhaar card</li>
+                    <li>Land ownership documents (Pattadar passbook)</li>
+                    <li>Bank account details and passbook</li>
+                    <li>Soil health card (for some schemes)</li>
+                    <li>Caste certificate (if applicable)</li>
+                </ul>
+                Specific requirements vary by scheme.
+                </p>
+            </details>
+
+            <details class="bg-slate-50 rounded-2xl p-4 shadow-sm">
+                <summary class="font-semibold text-slate-900 text-lg">
+                    Are the scheme links official?
+                </summary>
+                <p class="text-slate-600 mt-3 leading-relaxed">
+                    Yes! All scheme links on our platform direct you to official government portals. We regularly
+                    update these links to ensure they're current and accurate.
+                </p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<section class="glass rounded-3xl p-6 md:p-10 mt-6">
+    <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl font-bold text-slate-900">Still have questions?</h2>
+        <p class="text-slate-600 mt-3">
+            Can't find the answer you're looking for? Our support team is here to help.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+            <a href="{{ url_for('contact_page') }}"
+                class="px-8 py-3 bg-green-600 text-white font-semibold rounded-2xl shadow-lg hover:bg-green-700 transition">
+                Contact Support
+            </a>
+            <a href="{{ url_for('home') }}"
+                class="px-8 py-3 bg-white text-green-600 font-semibold rounded-2xl shadow-lg hover:bg-slate-50 transition">
+                Try the Chatbot
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

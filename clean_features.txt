@@ -1,0 +1,39 @@
+Soil_N_kg_ha
+Soil_P_kg_ha
+Soil_K_kg_ha
+Soil_pH
+Organic_Carbon_pct
+Avg_Temperature_C
+Rainfall_mm
+Humidity_pct
+District_Anakapalli
+District_Anantapur
+District_Annamayya
+District_Bapatla
+District_Chittoor
+District_East Godavari
+District_Eluru
+District_Guntur
+District_Kadapa
+District_Kakinada
+District_Konaseema
+District_Krishna
+District_Kurnool
+District_NTR
+District_Nandyal
+District_Nellore
+District_Palnadu
+District_Parvathipuram Manyam
+District_Prakasam
+District_Sri Satya Sai
+District_Srikakulam
+District_Tirupati
+District_Visakhapatnam
+District_Vizianagaram
+District_West Godavari
+Season_Rabi
+Season_Zaid
+Soil_Type_Black
+Soil_Type_Coastal Sands
+Soil_Type_Laterite
+Soil_Type_Red

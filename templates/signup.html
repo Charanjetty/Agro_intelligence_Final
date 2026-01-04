@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+{% block title %}Sign Up - AgroIntelligence{% endblock %}
+{% block head %}
+<style>
+    .auth-container {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        padding: 2rem 0;
+    }
+
+    .auth-card {
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-width: 1000px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 768px) {
+        .auth-card {
+            grid-template-columns: 1fr;
+        }
+
+        .auth-visual {
+            display: none;
+        }
+    }
+
+    .auth-visual {
+        background: linear-gradient(135deg, #0f766e 0%, #16a34a 100%);
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+    }
+
+    .auth-form {
+        padding: 3rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 1.25rem;
+    }
+
+    .input-group input,
+    .input-group select {
+        width: 100%;
+        padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+        outline: none;
+        border-color: #16a34a;
+        box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+    }
+
+    .input-group i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 0.5rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 1rem;
+        background: linear-gradient(135deg, #16a34a, #22c55e);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(22, 163, 74, 0.3);
+    }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+    }
+
+    .alert-error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+    }
+
+    .alert-success {
+        background: #d1fae5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-container -mx-4">
+    <div class="auth-card">
+        <!-- Visual Side -->
+        <div class="auth-visual">
+            <div class="text-center">
+                <div class="text-6xl mb-4">🚀</div>
+                <h2 class="text-3xl font-bold mb-4">Join AgroIntelligence</h2>
+                <p class="text-lg text-green-100 mb-8">
+                    Create your free account and start making smarter farming decisions today
+                </p>
+
+                <div class="space-y-6 text-left">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-check-circle text-2xl"></i>
+                            <h3 class="font-bold text-lg">100% Free Forever</h3>
+                        </div>
+                        <p class="text-green-100 text-sm">No hidden costs, no credit card required</p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-shield-alt text-2xl"></i>
+                            <h3 class="font-bold text-lg">Secure & Private</h3>
+                        </div>
+                        <p class="text-green-100 text-sm">Your data is encrypted and never shared</p>
+                    </div>
+
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-bolt text-2xl"></i>
+                            <h3 class="font-bold text-lg">Instant Access</h3>
+                        </div>
+                        <p class="text-green-100 text-sm">Start using all features immediately</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Side -->
+        <div class="auth-form">
+            <div class="mb-6">
+                <h1 class="text-3xl font-bold text-slate-900 mb-2">Create Account</h1>
+                <p class="text-slate-600">Fill in your details to get started</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                <i class="fas fa-{{ 'check-circle' if category == 'success' else 'exclamation-circle' }} mr-2"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('signup') }}" id="signupForm">
+                <!-- Personal Information -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <i class="fas fa-user text-green-600"></i>
+                        Personal Information
+                    </h3>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="full_name" placeholder="Full Name" required />
+                        </div>
+
+                        <div class="input-group">
+                            <i class="fas fa-user-tag"></i>
+                            <input type="text" name="username" placeholder="Username" required />
+                        </div>
+
+
+
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" name="phone" placeholder="Enter 10-digit Mobile Number" required
+                                pattern="[0-9]{10}" autocomplete="tel"
+                                title="Please enter a valid 10-digit mobile number" />
+                        </div>
+
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="password" placeholder="Password" required minlength="6" />
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    Create Account
+                </button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p class="text-slate-600">
+                    Already have an account?
+                    <a href="/login" class="text-green-600 hover:text-green-700 font-semibold">
+                        Sign in here
+                    </a>
+                </p>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-200">
+                <p class="text-xs text-slate-500 text-center">
+                    By creating an account, you agree to our
+                    <a href="/terms" class="text-green-600 hover:underline">Terms of Service</a> and
+                    <a href="/privacy" class="text-green-600 hover:underline">Privacy Policy</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

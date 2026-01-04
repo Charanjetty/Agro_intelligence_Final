@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}AgroIntelligence · Government Schemes{% endblock %}
+{% block head %}
+<style>
+  .scheme-card {
+    border-radius: 1.5rem;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    /* Added for image corners */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .scheme-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.1);
+  }
+</style>
+{% endblock %}
+{% block content %}
+<section class="glass rounded-3xl p-6 md:p-10 space-y-4">
+  <div class="flex flex-col md:flex-row gap-6">
+    <div class="space-y-4">
+      <p class="text-sm uppercase tracking-widest text-green-600 font-semibold">
+        Government scheme explorer
+      </p>
+      <h2 class="text-3xl font-bold text-slate-900">
+        Know your benefits. Claim funding faster.
+      </h2>
+      <p class="text-slate-600">
+        We track major central and state schemes that impact Andhra Pradesh
+        farmers. Filter by keyword, copy links, or share the cards via
+        WhatsApp/SMS with a single tap.
+      </p>
+      <div class="bg-white rounded-3xl overflow-hidden shadow">
+        <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=60"
+          alt="Farmers discussing" class="w-full h-56 object-cover" />
+      </div>
+    </div>
+    <div class="flex-1 bg-white rounded-3xl shadow p-6 space-y-4">
+      <label class="text-sm font-semibold text-slate-600">
+        Search schemes
+      </label>
+      <input id="scheme-search" type="text" placeholder="Type subsidy, insurance, irrigation..."
+        class="w-full rounded-2xl border border-slate-200 p-3 focus:ring-2 focus:ring-green-500" />
+      <div class="text-xs text-slate-400">
+        Tip: try typing "insurance", "income", or "irrigation".
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="glass rounded-3xl shadow p-6 space-y-4">
+  <div class="flex items-center justify-between flex-wrap gap-2">
+    <div>
+      <p class="text-sm text-green-600 font-semibold uppercase tracking-widest">
+        Curated benefits
+      </p>
+      <h3 class="text-2xl font-bold text-slate-900">
+        Click any card to copy the URL or share.
+      </h3>
+    </div>
+    <span class="text-sm text-slate-500" id="scheme-count">0 schemes</span>
+  </div>
+  <div id="scheme-cards" class="grid md:grid-cols-2 gap-6"></div>
+</section>
+
+<section class="glass rounded-3xl p-6 space-y-4">
+  <h3 class="text-xl font-semibold text-slate-900">How to apply</h3>
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="bg-white rounded-2xl p-4 shadow">
+      <p class="text-sm text-green-600 font-semibold uppercase">Step 1</p>
+      <p class="font-semibold text-slate-900 mt-1">Collect documents</p>
+      <p class="text-sm text-slate-500 mt-1">
+        Aadhaar, land documents, bank passbook, and soil test reports.
+      </p>
+    </div>
+    <div class="bg-white rounded-2xl p-4 shadow">
+      <p class="text-sm text-green-600 font-semibold uppercase">Step 2</p>
+      <p class="font-semibold text-slate-900 mt-1">Visit RBK / apply online</p>
+      <p class="text-sm text-slate-500 mt-1">
+        Use Mee-Seva or official portals linked below for e-filing.
+      </p>
+    </div>
+    <div class="bg-white rounded-2xl p-4 shadow">
+      <p class="text-sm text-green-600 font-semibold uppercase">Step 3</p>
+      <p class="font-semibold text-slate-900 mt-1">Track application</p>
+      <p class="text-sm text-slate-500 mt-1">
+        Save acknowledgement numbers; follow up via call center / RBK.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  const searchInput = document.getElementById("scheme-search");
+  const schemeContainer = document.getElementById("scheme-cards");
+  const schemeCount = document.getElementById("scheme-count");
+  let schemeData = [];
+
+  async function fetchSchemes() {
+    const response = await fetch("/schemes");
+    if (!response.ok) {
+      throw new Error("Unable to load schemes.");
+    }
+    return response.json();
+  }
+
+  function highlight(text, query) {
+    if (!query) return text;
+    const regex = new RegExp(`(${query})`, "ig");
+    return text.replace(regex, "<mark class='bg-green-200'>$1</mark>");
+  }
+
+  function renderSchemes(filter = "") {
+    const query = filter.trim().toLowerCase();
+    const filtered = schemeData.filter((scheme) => {
+      if (!query) return true;
+      return (
+        scheme.title.toLowerCase().includes(query) ||
+        scheme.description.toLowerCase().includes(query)
+      );
+    });
+    schemeCount.textContent = `${filtered.length} scheme${filtered.length === 1 ? "" : "s"}`;
+    schemeContainer.innerHTML = "";
+    filtered.forEach((scheme) => {
+      const card = document.createElement("article");
+      card.className = "scheme-card p-6 bg-white";
+      card.innerHTML = `
+        <div class="h-40 overflow-hidden">
+             <img src="/static/images/${scheme.image || 'scheme_financial.png'}" alt="${scheme.title}" 
+                  class="w-full h-full object-cover transform hover:scale-105 transition duration-500">
+        </div>
+        <div class="p-6">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                <i class="fas fa-hand-holding-seedling"></i>
+              </div>
+              <p class="text-xs uppercase tracking-widest text-green-600 font-bold">Govt Scheme</p>
+            </div>
+            
+            <h4 class="text-xl font-bold text-slate-900 mb-2 leading-tight">${highlight(scheme.title, query)}</h4>
+            <p class="text-slate-600 text-sm mb-4 line-clamp-2">${highlight(scheme.description, query)}</p>
+            
+            <div class="flex items-center gap-2 pt-2 border-t border-slate-100 mt-auto">
+              <a href="${scheme.link}" target="_blank" class="flex-1 text-center py-2.5 rounded-xl bg-slate-900 text-white font-semibold text-sm hover:bg-slate-800 transition">
+                Apply Now
+              </a>
+              <button data-link="${scheme.link}" class="share-btn w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
+                <i class="fas fa-share-alt"></i>
+              </button>
+            </div>
+        </div>
+      `;
+      schemeContainer.appendChild(card);
+    });
+    schemeContainer.querySelectorAll(".share-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        navigator.clipboard.writeText(button.dataset.link || "").then(() => {
+          button.textContent = "Copied!";
+          setTimeout(() => (button.textContent = "Copy link"), 1500);
+        });
+      });
+    });
+  }
+
+  async function initSchemes() {
+    try {
+      schemeData = await fetchSchemes();
+      renderSchemes();
+      searchInput.addEventListener("input", (event) =>
+        renderSchemes(event.target.value)
+      );
+    } catch (error) {
+      schemeContainer.innerHTML =
+        "<p class='text-slate-500'>Unable to load schemes right now.</p>";
+    }
+  }
+
+  initSchemes();
+</script>
+{% endblock %}

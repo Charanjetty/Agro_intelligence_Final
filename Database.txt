@@ -1,0 +1,61 @@
+Database Setup Guide
+AgroIntelligence currently uses SQLite for simplicity, which stores data in a local file (
+agrointelligence.db
+). For production usage, or if you want to connect to a robust database like PostgreSQL or MySQL, follow these steps.
+
+Option A: PostgreSQL (Recommended)
+1. Install PostgreSQL
+Windows: Download the installer from postgresql.org and run it.
+Remember the password you set for the postgres user during installation.
+2. Create a Database
+Open pgAdmin (installed with Postgres) or use the SQL Shell:
+
+CREATE DATABASE agrointelligence;
+3. Install Python Driver
+You need psycopg2 to allow Flask to talk to Postgres.
+
+pip install psycopg2-binary
+4. Update Application Config
+Open 
+app.py
+ and find the SQLALCHEMY_DATABASE_URI line (approx line 53). Change it from:
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(app.instance_path, "agrointelligence.db")}'
+To:
+
+# Format: postgresql://username:password@localhost/dbname
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:YOUR_PASSWORD@localhost/agrointelligence'
+Replace YOUR_PASSWORD with the actual password you set.
+
+5. Initialize Tables
+Since this is a new database, you need to create the tables. Run this python snippet in the terminal:
+
+python -c "from app import app, db; app.app_context().push(); db.create_all(); print('Tables created!')"
+Option B: MySQL
+1. Install MySQL
+Windows: Download the installer from mysql.com.
+2. Create Database
+Using MySQL Workbench or command line:
+
+CREATE DATABASE agrointelligence;
+3. Install Python Driver
+pip install mysql-connector-python
+# OR
+pip install pymysql
+4. Update Application Config
+In 
+app.py
+:
+
+# Format: mysql+pymysql://username:password@localhost/dbname
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:YOUR_PASSWORD@localhost/agrointelligence'
+5. Initialize Tables
+Same as above:
+
+python -c "from app import app, db; app.app_context().push(); db.create_all();"
+"Remember Device" Feature
+The application is already configured to remember users for 1 year once they log in or enter their guest profile. This uses cookies stored on the device.
+
+Code Reference: app.permanent_session_lifetime = timedelta(days=365) in 
+app.py
+.

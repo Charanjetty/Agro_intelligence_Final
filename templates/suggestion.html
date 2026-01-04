@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+                <span class="block text-green-600">Smart Suggestions for {{ crop }}</span>
+            </h1>
+            <p class="mt-4 text-xl text-gray-500">
+                Tailored recommendations for {{ district }} district to maximize your yield.
+            </p>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
+
+            <!-- Fertilizer Plan -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+                <div class="bg-gradient-to-r from-emerald-500 to-green-600 px-6 py-4">
+                    <h3 class="text-2xl font-bold text-white flex items-center">
+                        <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                            </path>
+                        </svg>
+                        Fertilizer Plan
+                    </h3>
+                </div>
+                <div class="p-6">
+                    {% if fertilizer_plan_gemini %}
+                    <div class="prose prose-green">
+                        <!-- Display Gemini Content (Markdown-like text) -->
+                        <div class="text-gray-700 whitespace-pre-line leading-relaxed font-medium">
+                            {{ fertilizer_plan_gemini }}
+                        </div>
+                    </div>
+                    {% elif guidance.fertilizer_plan %}
+                    <div class="space-y-4">
+                        {% for stage, details in guidance.fertilizer_plan.items() %}
+                        <div class="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
+                            <h4 class="text-lg font-semibold text-gray-800 capitalize">{{ stage }}</h4>
+                            <p class="text-gray-600 mt-1">{{ details }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-gray-500 italic">Specific fertilizer plan not available for this crop in your region.
+                        General NPK recommendation: 100:50:50 kg/ha.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Irrigation Plan -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+                <div class="bg-gradient-to-r from-blue-500 to-cyan-600 px-6 py-4">
+                    <h3 class="text-2xl font-bold text-white flex items-center">
+                        <svg class="w-8 h-8 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20 14.66V20a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2h2.34M20 14.66l-2.34-2.34a2 2 0 00-2.828 0L7.5 19.66M20 14.66h.01M5 20h14">
+                            </path>
+                        </svg>
+                        Irrigation Strategy
+                    </h3>
+                </div>
+                <div class="p-6">
+                    {% if irrigation_plan_gemini %}
+                    <div class="prose prose-blue">
+                        <div class="text-gray-700 whitespace-pre-line leading-relaxed font-medium">
+                            {{ irrigation_plan_gemini }}
+                        </div>
+                    </div>
+                    {% elif guidance.irrigation_plan %}
+                    <div class="space-y-4">
+                        {% for stage, method in guidance.irrigation_plan.items() %}
+                        <div class="flex items-start">
+                            <div
+                                class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm mt-0.5 mr-3">
+                                {{ loop.index }}
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-gray-800 capitalize">{{ stage }}</h4>
+                                <p class="text-gray-600">{{ method }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-gray-500 italic">Standard irrigation: Maintain moisture during critical growth
+                        stages. Use drip irrigation if water is scarce.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Soil Analytics Section -->
+        <div class="mt-10 bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+            <div class="bg-gradient-to-r from-slate-800 to-slate-900 px-8 py-5 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-white flex items-center">
+                    <i class="fas fa-chart-line mr-3 text-green-400"></i>
+                    Soil Health Analytics
+                </h3>
+                <span
+                    class="px-3 py-1 bg-green-500/20 text-green-400 text-[10px] font-black uppercase tracking-widest rounded-full border border-green-500/30">Live
+                    Diagnostics</span>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 items-center">
+                <div class="bg-slate-50 rounded-2xl p-4 shadow-inner border border-slate-100">
+                    {{ npk_plot | safe }}
+                </div>
+                <div
+                    class="bg-slate-50 rounded-2xl p-4 shadow-inner border border-slate-100 flex flex-col items-center">
+                    {{ ph_plot | safe }}
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter mt-2">Optimal pH range:
+                        6.0 - 7.5</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Climate & Market -->
+        <div class="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3 items-start">
+            <!-- Weather Context & Suggestions -->
+            <div class="bg-white rounded-xl shadow-lg p-6 lg:col-span-2">
+                <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    Climate & Weather Suggestions
+                </h3>
+
+                <!-- Gemini Climate Suggestions -->
+                <div
+                    class="relative overflow-hidden rounded-3xl mb-10 p-1 bg-gradient-to-br from-slate-50 to-white shadow-inner border border-slate-100">
+                    <!-- Art Background -->
+                    <div
+                        class="absolute inset-0 opacity-5 bg-cover bg-center bg-[url('{{ url_for('static', filename='images/weather_farm_art.png') }}')]">
+                    </div>
+
+                    <div
+                        class="relative grid {% if climate_1d or climate_7d %}md:grid-cols-2{% else %}grid-cols-1{% endif %} gap-8 p-6 items-stretch">
+                        {% if climate_1d or climate_7d %}
+                        <div
+                            class="bg-white/80 backdrop-blur-md border border-white/90 p-8 rounded-3xl shadow-sm hover:shadow-md transition-all group flex flex-col justify-center">
+                            <div class="flex items-center mb-4">
+                                <div
+                                    class="w-12 h-12 bg-yellow-400/20 rounded-2xl flex items-center justify-center mr-4 group-hover:rotate-12 transition-all duration-300">
+                                    <i class="fas fa-sun text-yellow-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-slate-800 tracking-tight text-lg">AI Forecast Insight
+                                    </h4>
+                                    <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">
+                                        Atmospheric Analysis</p>
+                                </div>
+                            </div>
+                            <div
+                                class="text-base text-slate-700 whitespace-pre-line leading-relaxed italic border-l-4 border-yellow-200 pl-4 py-2">
+                                {{ climate_7d if climate_7d else climate_1d }}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div
+                            class="bg-white/80 backdrop-blur-md border border-white/90 p-0 overflow-hidden rounded-3xl shadow-sm hover:shadow-md transition-all flex flex-col">
+                            <div class="relative flex-grow min-h-[250px] md:min-h-[350px]">
+                                <img src="{{ url_for('static', filename='images/weather_farm_art.png') }}"
+                                    class="absolute inset-0 w-full h-full object-cover" alt="Weather Art">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                            </div>
+                            <div class="p-4 bg-white/90 backdrop-blur-sm border-t border-white/40 text-center">
+                                <p class="text-xs text-slate-500 uppercase tracking-[0.2em] font-black">
+                                    Localized Climate Model</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Weather Metrics (Enhanced Glassmorphism) -->
+                {% if weather %}
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <div
+                        class="bg-gradient-to-br from-orange-50 to-amber-50 p-4 rounded-xl border border-orange-100/50 shadow-sm hover:scale-105 transition-transform">
+                        <i class="fas fa-thermometer-half text-orange-500 mb-2 text-xl"></i>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">Temp</p>
+                        <p class="text-xl font-black text-slate-800">{{ weather.current.temperature }}°C</p>
+                    </div>
+                    <div
+                        class="bg-gradient-to-br from-blue-50 to-cyan-50 p-4 rounded-xl border border-blue-100/50 shadow-sm hover:scale-105 transition-transform">
+                        <i class="fas fa-wind text-blue-500 mb-2 text-xl"></i>
+                        <p class="text-[10px] text-gray-500 uppercase font-bold">Wind</p>
+                        <p class="text-xl font-black text-slate-800">{{ weather.current.windspeed }} km/h</p>
+                    </div>
+                    <!-- Add more if needed -->
+                </div>
+                {% else %}
+                <p class="text-gray-500 italic p-4">Weather data currently unavailable.</p>
+                {% endif %}
+            </div>
+
+            <!-- Market Info -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                    Market Potential
+                </h3>
+                <div class="text-center py-6">
+                    {% if market_potential %}
+                    <div class="text-left bg-purple-50 p-4 rounded-xl">
+                        <div class="text-sm text-purple-900 whitespace-pre-line leading-relaxed font-medium">
+                            {{ market_potential }}
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="text-gray-500 mb-2">Market Price Index</p>
+                    <div class="text-4xl font-extrabold text-purple-600">
+                        {{ guidance.market_index if guidance.market_index else 'N/A' }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Government Schemes -->
+        <h2 class="text-2xl font-bold text-gray-900 mt-16 mb-8">Relevant Government Schemes</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for scheme in schemes %}
+            <div
+                class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 p-6 border-t-4 border-indigo-500 group">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 transition-colors group-hover:bg-indigo-600 group-hover:text-white">
+                        <i class="fas fa-landmark text-xl"></i>
+                    </div>
+                    <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Active Scheme</span>
+                </div>
+                <h3 class="text-xl font-extrabold text-slate-800 mb-2 leading-snug">{{ scheme.title }}</h3>
+                <p class="text-slate-600 text-sm mb-6 line-clamp-3">{{ scheme.description }}</p>
+                <div class="flex items-center justify-between">
+                    <a href="{{ scheme.link }}" target="_blank"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-slate-900 transition-colors flex items-center shadow-md">
+                        Explore Benefit <i class="fas fa-external-link-alt ml-2"></i>
+                    </a>
+                    <i
+                        class="fas fa-handshake text-indigo-100 text-3xl group-hover:text-indigo-200 transition-colors"></i>
+                </div>
+            </div>
+            {% else %}
+            <div
+                class="col-span-full py-12 text-center bg-white rounded-3xl shadow-inner border-2 border-dashed border-gray-200">
+                <i class="fas fa-folder-open text-gray-300 text-5xl mb-4"></i>
+                <p class="text-gray-500 font-medium">No specialized schemes found for this selection.</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="{{ url_for('dashboard') }}"
+                class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200">
+                &larr; Back to Dashboard
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

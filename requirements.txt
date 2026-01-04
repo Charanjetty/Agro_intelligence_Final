@@ -1,0 +1,30 @@
+# Core
+# tensorflow
+# h5py
+numpy
+pandas
+scikit-learn
+
+# Web Framework
+Flask
+Flask-Login
+Flask-SQLAlchemy
+Flask-Mail
+Werkzeug
+gunicorn
+
+# Database
+psycopg2-binary
+SQLAlchemy
+
+# Utilities
+requests
+python-dotenv
+email-validator
+Authlib
+
+# Visualization & Image Processing
+plotly
+Pillow
+openai
+google-genai
