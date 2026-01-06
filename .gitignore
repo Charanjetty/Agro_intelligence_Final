@@ -35,8 +35,10 @@ Thumbs.db
 *.log
 
 # Models and temporary scripts (keep core models if needed, but usually we ignore large ones)
-models/*.pkl
-models/*.json
+*.pkl
+models/
+models/**
+
 fix_routes.py
 generate_graphs.py
 confusion_matrix_counts.png
@@ -46,6 +48,8 @@ confusion_matrix_normalized.png
 # *.jpg
 # *.jpeg
 
-# Ignore generated confusion matrix images
-ieee_confusion_matrix_counts.png
-ieee_confusion_matrix_normalized.png
+
+
+# Allow ML model for Git LFS
+!models/
+!models/final_hybrid_model.pkl
