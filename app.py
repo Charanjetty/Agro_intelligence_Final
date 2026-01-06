@@ -76,8 +76,6 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 # Google Gemini Configuration
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
 
 # Client initialized in AIService
 
@@ -129,7 +127,7 @@ EXCLUDE_COLUMNS = [
 DISTRICT_COORDINATES: Dict[str, Dict[str, float]] = {
     "Alluri Sitharama Raju": {"lat": 17.6, "lon": 81.9},
     "Anakapalli": {"lat": 17.6868, "lon": 83.0033},
-    "Anantapuram": {"lat": 14.6819, "lon": 77.6006},
+    "Anantapur": {"lat": 14.6819, "lon": 77.6006},
     "Annamayya": {"lat": 13.95, "lon": 78.5},
     "Bapatla": {"lat": 15.8889, "lon": 80.4593},
     "Chittoor": {"lat": 13.2172, "lon": 79.1003},
@@ -145,161 +143,77 @@ DISTRICT_COORDINATES: Dict[str, Dict[str, float]] = {
     "Palnadu": {"lat": 16.1167, "lon": 80.1667},
     "Parvathipuram Manyam": {"lat": 18.8, "lon": 83.433},
     "Prakasam": {"lat": 15.5, "lon": 79.5},
-    "Sri Potti Sriramulu Nellore": {"lat": 14.4426, "lon": 79.9865},
-    "Sri Sathya Sai": {"lat": 14.4, "lon": 77.8},
+    "Nellore": {"lat": 14.4426, "lon": 79.9865},
+    "Sri Satya Sai": {"lat": 14.4, "lon": 77.8},
     "Srikakulam": {"lat": 18.2989, "lon": 83.8938},
     "Tirupati": {"lat": 13.6288, "lon": 79.4192},
     "Visakhapatnam": {"lat": 17.6868, "lon": 83.2185},
     "Vizianagaram": {"lat": 18.113, "lon": 83.3956},
     "West Godavari": {"lat": 16.7107, "lon": 81.0972},
-    "YSR Kadapa": {"lat": 14.4673, "lon": 78.8242},
+    "Kadapa": {"lat": 14.4673, "lon": 78.8242},
 }
 
 GOVERNMENT_SCHEMES = [
     {
-        "title": "YSR Rythu Bharosa",
-        "description": "Financial assistance of ₹13,500 per annum for small and marginal farmers in Andhra Pradesh.",
-        "link": "https://ysrrythubharosa.ap.gov.in/",
+        "title": "Annadata Sukhibhava – PM Kisan",
+        "description": "Flagship scheme providing ₹20,000 per annum (₹6,000 PM-Kisan + ₹14,000 State) to all farmers.",
+        "link": "https://apagrisnet.gov.in/",
         "image": "scheme_financial.png"
     },
     {
-        "title": "PM-KISAN",
-        "description": "Central scheme providing ₹6,000 per year in three installments to eligible farmer families.",
-        "link": "https://pmkisan.gov.in/",
-        "image": "scheme_financial.png"
-    },
-    {
-        "title": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
-        "description": "Crop insurance that protects farmers against losses due to unforeseen events.",
+        "title": "PM Fasal Bima Yojana (PMFBY)",
+        "description": "Reinstated central-state crop insurance protecting farmers against unforeseen losses.",
         "link": "https://pmfby.gov.in/",
         "image": "scheme_insurance.png"
     },
     {
-        "title": "Micro Irrigation Fund",
-        "description": "Subsidized loans for drip and sprinkler systems to encourage water-use efficiency.",
-        "link": "https://nmsa.dac.gov.in/MIF.aspx",
-        "image": "scheme_irrigation.png"
+        "title": "PM-Kisan (Income Support)",
+        "description": "Central scheme providing income support of ₹6,000 per year in three installments.",
+        "link": "https://pmkisan.gov.in/",
+        "image": "scheme_financial.png"
     },
     {
         "title": "Soil Health Card Scheme",
-        "description": "Free soil testing and health cards to help farmers optimize fertilizer use.",
+        "description": "Regular soil testing and issuance of cards to optimize fertilizer application.",
         "link": "https://soilhealth.dac.gov.in/",
         "image": "scheme_irrigation.png"
     },
     {
-        "title": "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY)",
-        "description": "Subsidy for creating irrigation sources, water-saving technologies, and watershed development.",
-        "link": "http://pmksy.gov.in/",
+        "title": "PM Krishi Sinchayee Yojana (PMKSY)",
+        "description": "Subsidy for drip/sprinkler irrigation and creation of water sources.",
+        "link": "https://pmksy.gov.in/",
         "image": "scheme_irrigation.png"
     },
     {
-        "title": "Kisan Credit Card (KCC)",
-        "description": "Easy access to credit for farmers at subsidized interest rates for agricultural needs.",
-        "link": "https://www.pmkisan.gov.in/Kcc.aspx",
-        "image": "scheme_financial.png"
-    },
-    {
-        "title": "National Mission for Sustainable Agriculture",
-        "description": "Promotes sustainable farming practices, soil health management, and resource conservation.",
-        "link": "https://nmsa.dac.gov.in/",
-        "image": "scheme_irrigation.png"
-    },
-    {
-        "title": "Paramparagat Krishi Vikas Yojana",
-        "description": "Support for organic farming with financial assistance up to ₹50,000 per hectare.",
-        "link": "https://pgsindia-ncof.gov.in/",
-        "image": "scheme_irrigation.png"
-    },
-    {
-        "title": "AP Free Crop Insurance Scheme",
-        "description": "State-sponsored crop insurance covering losses from natural calamities for AP farmers.",
-        "link": "https://ccla.cgg.gov.in/",
-        "image": "scheme_insurance.png"
-    },
-    {
-        "title": "National Agriculture Market (e-NAM)",
+        "title": "National Agriculture Market (eNAM)",
         "description": "Online trading platform for agricultural commodities ensuring better prices for farmers.",
         "link": "https://www.enam.gov.in/",
         "image": "scheme_financial.png"
     },
     {
-        "title": "Rythu Nestam Scheme",
-        "description": "Zero-interest crop loans up to ₹1 lakh for AP farmers (2019-2024 waiver).",
-        "link": "https://www.apsvnidhi.in/",
+        "title": "Kisan Credit Card (KCC)",
+        "description": "Easy access to credit for farmers at subsidized interest rates for agricultural needs.",
+        "link": "https://www.myscheme.gov.in/schemes/kisan-credit-card",
         "image": "scheme_financial.png"
     },
     {
-        "title": "YSR Sunna Vaddi Panta Runalu",
-        "description": "Zero percent interest on crop loans up to ₹1 lakh for farmers who repay in time.",
-        "link": "https://apsvbad.ap.gov.in/",
-        "image": "scheme_financial.png"
-    },
-    {
-        "title": "YSR Yantra Seva Scheme",
-        "description": "Financial assistance for purchasing tractors, combined harvesters, and other machinery through CHCs.",
-        "link": "https://ysryantrasevaportal.ap.gov.in/",
-        "image": "scheme_financial.png"
-    },
-    {
-        "title": "YSR Pasu Bima Yojana",
-        "description": "Livestock insurance coverage for cattle to safeguard farmers against animal mortality.",
-        "link": "https://ahd.ap.gov.in/",
-        "image": "scheme_insurance.png"
-    },
-    {
-        "title": "PM-KUSUM (Solar Pumps)",
-        "description": "Subsidy of up to 90% for setting up solar water pumps for irrigation.",
-        "link": "https://pmkusum.mnre.gov.in/",
-        "image": "scheme_irrigation.png"
-    },
-    {
-        "title": "Agriculture Infrastructure Fund (AIF)",
-        "description": "Financing facility for post-harvest management infrastructure and community farming assets.",
-        "link": "https://agriinfra.dac.gov.in/",
-        "image": "scheme_financial.png"
-    },
-    {
-        "title": "National Food Security Mission (NFSM)",
-        "description": "Increases production of rice, wheat, pulses, and coarse cereals through technology and area expansion.",
-        "link": "https://nfsm.gov.in/",
-        "image": "scheme_irrigation.png"
-    },
-    {
-        "title": "Pradhan Mantri Kisan Maandhan Yojana (PM-KMY)",
+        "title": "PM Kisan Maandhan (Pension)",
         "description": "Pension scheme for small and marginal farmers providing ₹3,000 monthly after age 60.",
         "link": "https://maandhan.in/",
         "image": "scheme_financial.png"
     },
     {
-        "title": "Operation Greens",
-        "description": "Integrated development of value chain for Top (Tomato, Onion, Potato) and other perishables.",
-        "link": "https://mofpi.gov.in/Schemes/operation-greens",
+        "title": "AP Agri Services Portal",
+        "description": "Official Andhra Pradesh agriculture services hub for crop booking, insurance, and more.",
+        "link": "https://apagrisnet.gov.in/",
         "image": "scheme_financial.png"
     },
     {
-        "title": "Rashtriya Krishi Vikas Yojana (RKVY)",
-        "description": "Ensures holistic development of agriculture and allied sectors through infrastructure projects.",
-        "link": "https://rkvy.nic.in/",
-        "image": "scheme_irrigation.png"
-    },
-    {
-        "title": "Mission for Integrated Development of Horticulture (MIDH)",
-        "description": "Promotes holistic growth of the horticulture sector including fruits, vegetables, and flowers.",
-        "link": "https://midh.gov.in/",
-        "image": "scheme_irrigation.png"
-    },
-    {
-        "title": "Coconut Development Board Schemes",
-        "description": "Financial assistance for new plantations, replanting, and rejuvenation of coconut gardens.",
-        "link": "https://www.coconutboard.gov.in/",
-        "image": "scheme_irrigation.png"
-    },
-    {
-        "title": "National Project on Organic Farming (NPOF)",
-        "description": "Promotes organic farming through technical support, quality control, and financial assistance.",
-        "link": "https://ncof.dac.gov.in/",
-        "image": "scheme_irrigation.png"
-    },
+        "title": "Vaddi Leni Runalu",
+        "description": "Zero interest crop loans up to ₹1 lakh for farmers who repay within the stipulated time.",
+        "link": "https://apagrisnet.gov.in/",
+        "image": "scheme_financial.png"
+    }
 ]
 
 CHATBOT_KNOWLEDGE = [
@@ -321,7 +235,7 @@ CHATBOT_KNOWLEDGE = [
     {
         "question": "How do I access government schemes?",
         "keywords": ["scheme", "government", "subsidy"],
-        "answer": "Visit the Rythu Bharosa Kendram or apply online via the respective portals with your Aadhaar and land records.",
+        "answer": "Visit your nearest Rythu Bharosa Kendram (RBK) or apply online via the Annadata Unnathi platform.",
     },
 ]
 
@@ -619,13 +533,15 @@ class ChatbotService:
 
 class AIService:
     def __init__(self):
-        try:
-            self.openai_client = OpenAI(api_key=OPENAI_API_KEY)
-        except Exception as e:
-            print(f"OpenAI Client Init Error: {e}")
-            self.openai_client = None
+        self.openai_client = None
+        if OPENAI_API_KEY:
+            try:
+                self.openai_client = OpenAI(api_key=OPENAI_API_KEY)
+            except Exception as e:
+                print(f"OpenAI Client Init Error: {e}")
 
         self.gemini_client = None
+        self.gemini_model = None
         if GEMINI_API_KEY:
             try:
                 # Compatibility check for new genai.Client vs old configure()
@@ -696,9 +612,9 @@ class AIService:
             f"- Environment: Season={season}, Water Source={water}, Weather Summary={weather}\n"
             f"- Available Relevant Schemes: {schemes_str}\n\n"
             "Produce EXACTLY 4 sections with EXACTLY 3 BULLET POINTS EACH:\n"
-            "1. FERTILIZER PLAN: Specific doses based on NPK. Mention relevant subsidies if applicable.\n"
-            "2. IRRIGATION PLAN: Watering frequency and methods. Mention YSR or PM irrigation schemes if relevant.\n"
-            "3. MARKET POTENTIAL: Price per kg and quintal, trends. Mention e-NAM or Rythu Bazar if applicable.\n"
+            "1. FERTILIZER PLAN: Specific doses based on NPK. Mention relevant subsidies (e.g., Annadata Unnathi) if applicable.\n"
+            "2. IRRIGATION PLAN: Watering frequency and methods. Mention Annadata Sukhibhava or PM irrigation schemes if relevant.\n"
+            "3. MARKET POTENTIAL: Price per kg and quintal, trends. Mention e-NAM or relevant market platforms if applicable.\n"
             "4. CLIMATE PRECAUTIONS: Weather-aware steps. Mention Crop Insurance (PMFBY) if relevant.\n\n"
             "Use clear section headers (e.g., ### FERTILIZER PLAN)."
         )
@@ -877,8 +793,8 @@ class CropRecommendationEngine:
         
         # District name normalization map (dataset name -> model feature name)
         district_map = {
-            "YSR Kadapa": "Kadapa",
-            "Sri Sathya Sai": "Sri Satya Sai",
+            "Kadapa": "Kadapa",
+            "Sri Satya Sai": "Sri Satya Sai",
             # Add other mappings if needed
         }
         

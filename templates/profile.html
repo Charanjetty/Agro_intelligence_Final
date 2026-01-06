@@ -9,8 +9,9 @@
     <div class="glass rounded-3xl p-8 mb-8 flex flex-col md:flex-row items-center gap-8 animate-fade-in-up">
         <div class="relative group">
             <div class="w-32 h-32 rounded-full border-4 border-white shadow-xl overflow-hidden bg-slate-100">
-                <img src="{{ url_for('static', filename='images/' + (user.profile_image if user.profile_image else 'default_avatar.png')) if user.is_authenticated else 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.full_name }}"
-                    alt="Profile" class="w-full h-full object-cover">
+                <img id="profile-pic-img"
+                    src="{{ url_for('static', filename='images/avatars/' + (user.profile_image if user.profile_image and user.profile_image != 'default_avatar.png' else 'crop_rice.png')) }}"
+                    data-name="{{ user.full_name }}" alt="Profile" class="w-full h-full object-cover">
             </div>
             {% if user.is_authenticated %}
             <button
@@ -90,6 +91,23 @@
 
 {% block scripts %}
 <script>
+    // Dynamic Crop Avatar Selection
+    const profilePic = document.getElementById('profile-pic-img');
+    const userName = profilePic.getAttribute('data-name') || "Guest Farmer";
+
+    // Simple hash to pick one of the available crop/vegetable avatars
+    const avatars = ['crop_rice.png', 'crop_maize.png', 'crop_cotton.png', 'crop_tomato.png'];
+    let hash = 0;
+    for (let i = 0; i < userName.length; i++) {
+        hash = userName.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % avatars.length;
+
+    // Only update if it's the default
+    if (profilePic.src.includes('default_avatar.png') || profilePic.src.includes('crop_rice.png')) {
+        profilePic.src = `/static/images/avatars/${avatars[index]}`;
+    }
+
     // Fetch districts for dropdown
     fetch('/get_district_names')
         .then(response => response.json())
